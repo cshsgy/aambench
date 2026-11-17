@@ -1,0 +1,9 @@
+\section{Discrete requirements and the pinned force}
+(a) zero work: $\langle\bm v,C\bm v\rangle_V=0\ \forall\bm v$; (b) exact closure against $G$:
+$\sum_c V_c\bm K_c\cdot(C\bm v)_c=-\Omega\sum_f(G\bm v)_f(\psi_R-\psi_L)_f\ \forall \bm v$.
+\begin{lemma}[pinning]\derived\ (a)+(b) imply $C\bm K=\Omega V^{-1}G^{T}\,d\psi$: the force on solid-body
+rotation is fixed by the grid, $G$ and $\psi$ alone.\end{lemma}
+Define $\bm e=\Omega V^{-1}G^{T}d\psi-C_{\rm cell}\bm K$. Consistency (c) requires $\bm e=0$.
+Scope: linear $C$, exact (a), exact (b) against the given compact $G$. Dropping any one escapes the lemma.
+TODO: proof that no compact linear-exact re-weighting of $G$ removes the first moment of $\bm e$ (side study
+claims $-\tfrac14,-\tfrac18,-\tfrac1{12}\,\sin2\beta$; not independently reproduced).

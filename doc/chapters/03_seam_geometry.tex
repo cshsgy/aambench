@@ -1,0 +1,12 @@
+\section{Seam geometry and the row-0 defect}
+\measured\ (\texttt{scripts/geometry/seam\_pin.py}, two-point central $G$, $\psi=\Omega s^2$, polar axis,
+error $=|\Omega V^{-1}G^T d\psi-\nabla\psi|/(\Omega a)$):
+\begin{center}\begin{tabular}{rrrrr}\toprule
+$N$ & row-0 max & row-0 rms & row-1 max & interior max\\\midrule
+8 & 0.265 & 0.118 & 0.044 & --\\ 16 & 0.281 & 0.113 & 0.013 & 0.012\\
+32 & 0.300 & 0.115 & 0.0033 & 0.0031\\ 64 & 0.327 & 0.116 & 0.0008 & 0.0008\\\bottomrule\end{tabular}\end{center}
+Row 0 does not converge; interior is second order. Across a seam the neighbour centre is the exact mirror of the
+own centre (offset $\le 2\times10^{-14}$ cell); relative to the continuation of the own grid line it is offset by
+$\tfrac12\sin 2\beta$ cells (max 0.40/0.43/0.45/0.46 at $N=8\ldots64$), zero at mid-edge, largest at the corners.
+Agrees with Jiheng's check on snapy main \texttt{cbf86830}. Wider linear-exact seam stencil
+(\texttt{seam\_pin\_reweight.py}): row-0 0.36--0.37, defect moves into row 1.

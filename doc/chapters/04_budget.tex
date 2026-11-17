@@ -1,0 +1,6 @@
+\section{Integrated AAM budget}
+$R_c=\sum_c V_c(\bm K\cdot\bm F_{\rm cell}-\mathrm{rate}(M_{\rm central}))$,
+$D=\sum_c V_c\,\mathrm{rate}(M-M_{\rm central})$, $T$ = transport/metric error removed by flux form.
+Then $\texttt{transport}=R_c-D$, $\texttt{full}=R_c$, $\texttt{off}=R_c-D+T$ (reported closed to $10^{-9}$/stage
+in snapy, SW and 3D). The global closure (snapy \#365) removes $R_c$ as a solid-body increment each stage.
+TODO: reproduce in the numpy testbed with a dissipative flux.
