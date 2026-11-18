@@ -10,3 +10,13 @@ own centre (offset $\le 2\times10^{-14}$ cell); relative to the continuation of 
 $\tfrac12\sin 2\beta$ cells (max 0.40/0.43/0.45/0.46 at $N=8\ldots64$), zero at mid-edge, largest at the corners.
 Agrees with Jiheng's check on snapy main \texttt{cbf86830}. Wider linear-exact seam stencil
 (\texttt{seam\_pin\_reweight.py}): row-0 0.36--0.37, defect moves into row 1.
+
+\paragraph{Six-point central flux.}\measured\ (\texttt{seam\_pin6.py}): with the cp5-central face weights
+(the central part of snapy's weno5 velocity reconstruction with \texttt{shock: false}) and the ghost weights
+transposed back onto the neighbour panel, row-0 max is 0.24/0.25/0.27/0.27 at $N=8/16/32/64$ and row-1 max
+0.083/0.071/0.058/0.064, neither converging; row 2 and the interior converge at second order (0.031/0.015/0.008/0.010
+and 0.015/0.004/0.001/0.0003). Linear and cubic panel-edge ghosts differ by under 10\% in row 0 and not at all from
+row 2 inward. So the wider stencil spreads the non-converging defect into row 1 and does not remove it, and the ghost
+order is not the cause. This agrees with the side study (linear or cubic alike) and with Jiheng's five-point row-0
+0.18--0.21; the numbers differ by the norm (max over the row vs fraction of $\max|f\rho u|$).
+
