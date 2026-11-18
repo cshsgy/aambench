@@ -4,3 +4,13 @@ $D=\sum_c V_c\,\mathrm{rate}(M-M_{\rm central})$, $T$ = transport/metric error r
 Then $\texttt{transport}=R_c-D$, $\texttt{full}=R_c$, $\texttt{off}=R_c-D+T$ (reported closed to $10^{-9}$/stage
 in snapy, SW and 3D). The global closure (snapy \#365) removes $R_c$ as a solid-body increment each stage.
 TODO: reproduce in the numpy testbed with a dissipative flux.
+
+\paragraph{snapy cross-check (lane T, CPU).}\measured\ (\texttt{results/snapy/aam\_test\_cbf86830\_cpu.txt}): the
+full test file at snapy main \texttt{cbf86830} passes on CPU and reproduces the thread's figures to the printed digits:
+arm (a) \texttt{off} $1.68\times10^{-6}$ vs \texttt{transport} $1.5\times10^{-15}$ (solid body, 20 steps);
+(f) explicit Coriolis at the wind's rate: \texttt{off} $8.29\times10^{-7}$, \texttt{transport} $6.48\times10^{-9}$ (128x),
+\texttt{full} $4.05\times10^{-10}$; (g)/(h) 88x/83x for \texttt{transport}, \texttt{full} 917x/951x; at 14 wind rates
+\texttt{transport} is 2--12x worse than \texttt{off} and \texttt{full} 6.5--17x better, as documented; (i) W2 gain 1.7x at
+$\Omega=u_0/a$, 1.08x at Earth's rate; (j) noise KE ratio 1.056 / 1.371; (k) \texttt{full} 29.8x below \texttt{off};
+(l) closure $\le 2.4\times10^{-13}$ (traditional arm g) and $\sim10^{-15}$ elsewhere. NetCDF was disabled in this build;
+the test does not use it.
