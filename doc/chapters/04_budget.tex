@@ -23,19 +23,19 @@ device noise), so the CPU and CUDA paths agree on all AAM claims at this pin.
 shallow-roe, WENO5 without scale or shock, rk3 at CFL 0.5, one block per panel) run to 62.0 d at C16/C32/C48 on snapy
 main \texttt{cbf86830}, with \texttt{off}, \texttt{transport} and \texttt{full} (the latter two with
 \texttt{interp\_order: 4}). Every figure reproduces the thread's gap-3 rows (Jiheng, 11-14, measured on
-\texttt{xiz/full-on-357 1be61abd}) to the printed digits. $L^\infty$ error of $\phi$ against the steady state,
+\texttt{xiz/full-on-357 1be61abd}; copied to \texttt{results/snapy/w2/thread\_gap3\_rows.txt}) to the printed digits. $L^\infty$ error of $\phi$ against the steady state,
 relative to $\phi_0$: \texttt{off} $7.361\times10^{-3}$ / $1.453\times10^{-3}$ / $5.214\times10^{-4}$ (orders 2.34, 2.53);
 \texttt{transport} $5.363\times10^{-3}$ / $1.114\times10^{-3}$ / $4.204\times10^{-4}$ (2.27, 2.40);
 \texttt{full} $2.106\times10^{-3}$ / $6.091\times10^{-4}$ / $2.598\times10^{-4}$ (1.79, 2.10; $L^2$ 1.91, 2.02),
 i.e.\ \texttt{full} stays below \texttt{off} at every resolution (0.29, 0.42, 0.50 of it) but with a lower order.
 Absolute AAM drift at 62 d, $\texttt{off}/\texttt{full}$: 132x / 271x / 414x by end value and 80x / 146x / 215x by
 per-step maximum (\texttt{full} end drift $+2.2\times10^{-5}$, $+1.1\times10^{-6}$, $+2.1\times10^{-7}$, no sign
-change); \texttt{transport} cuts the drift only 1.8--1.9x. Mass is conserved to $7\times10^{-13}$ or better; all
-runs finite; wall time 53--245 s per run on 12 CPU threads. \hyp\ (from the thread, untested here): the
+change at the 100-step sampling of the series); \texttt{transport} cuts the drift only 1.8--1.9x. Mass is conserved to $7.4\times10^{-13}$ or better; all
+runs finite; wall time 53--245 s per run on 12 CPU threads (snapy sha, command and norms in \texttt{results/snapy/w2/README.md}). \hyp\ (from the thread, untested here): the
 second-order behaviour of \texttt{full} comes from the C2-type local torque it shares with the testbed scheme, not
 from the cubic ghost rule, since \texttt{transport} with the same ghosts keeps order 2.3--2.4.
 With the global closure of \#365 on top (\texttt{conserve-axial-momentum-closure: true}, same runs): the absolute AAM
 drift is at round-off, $2.4\times10^{-13}$ / $5.0\times10^{-13}$ / $7.5\times10^{-13}$ by per-step maximum at
-C16/C32/C48, and the $\phi$ error is that of \texttt{full} to three digits ($L^\infty$ $2.098\times10^{-3}$ /
+C16/C32/C48, and the $\phi$ error is within 0.4\% ($L^\infty$) and 1.0\% ($L^2$) of \texttt{full}'s ($L^\infty$ $2.098\times10^{-3}$ /
 $6.097\times10^{-4}$ / $2.599\times10^{-4}$), so the uniform solid-body increment costs no accuracy on this flow
 (\measured).

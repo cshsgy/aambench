@@ -20,6 +20,6 @@ full       C16->C32 1.79 / 1.91   C32->C48 2.10 / 2.02
 full+closure C16->C32 1.78 / 1.89   C32->C48 2.10 / 2.02
 
 phi error of the mode over off (Linf), and AAM drift of off over the mode, by end value / by per-step max
-transport  C16 err 0.73, AAM 2x / 2x   C32 err 0.77, AAM 2x / 2x   C48 err 0.81, AAM 2x / 2x
+transport  C16 err 0.73, AAM 1.8x / 1.8x   C32 err 0.77, AAM 1.9x / 1.9x   C48 err 0.81, AAM 1.9x / 1.9x
 full       C16 err 0.29, AAM 132x / 80x   C32 err 0.42, AAM 271x / 146x   C48 err 0.50, AAM 414x / 215x
-full+closure C16 err 0.28, AAM 11962339819x / 11962339819x   C32 err 0.42, AAM 609826846x / 609826846x   C48 err 0.50, AAM 113021356x / 113021356x
+full+closure C16 err 0.28, AAM at round-off   C32 err 0.42, AAM at round-off   C48 err 0.50, AAM at round-off

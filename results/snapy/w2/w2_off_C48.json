@@ -1132,5 +1132,18 @@
    "phi_l2": 0.00016953707200400054,
    "dM_over_M": -7.408639327051749e-13
   }
- ]
+ ],
+ "snapy_sha": "cbf8683009de2d4c211e65e5daeaf1ad1e05c80d",
+ "omp_threads": "12",
+ "argv": [
+  "--mode",
+  "off",
+  "--nx",
+  "48",
+  "--days",
+  "62",
+  "--every",
+  "100"
+ ],
+ "provenance_note": "snapy_sha, omp_threads and argv added after the run (review request, Tianhao 11-18); the numbers are untouched"
 }

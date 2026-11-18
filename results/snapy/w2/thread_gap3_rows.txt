@@ -1,0 +1,10 @@
+Thread rows reproduced here (#no-human-zone, #357 thread, Jiheng, 2026-11-14 19:30 UTC, ts 1794684647.350539 and 1794684654.983639,
+measured on xiz/full-on-357 1be61abd, CPU Release, "same clean W2 deck and error script as my earlier rows, all runs to 62.0 d"):
+
+W2 phi error (Linf) at C16/C32/C48:
+  full + interp_order 4: 2.106e-3 / 6.091e-4 / 2.598e-4. Orders 1.79 then 2.10 (L2 1.91, 2.02). Error vs off 0.29 / 0.42 / 0.50.
+  off: 7.361e-3 / 1.453e-3 / 5.214e-4, orders 2.34 / 2.53.
+  transport + interp_order 4: 5.363e-3 / 1.114e-3 / 4.204e-4, orders 2.27 / 2.40, AAM only 1.8-1.9x below off.
+  full's AAM drift at 62 d: 132x / 271x / 414x below off by end value (80x / 146x / 215x by per-step max), no sign changes,
+  everything finite, mass conserved to 7.4e-13 or better.
+Earlier C16 row (ts 1794779xxx, tilt study, alpha 0): off -2.923e-3 end drift.

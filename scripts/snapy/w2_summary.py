@@ -54,7 +54,10 @@ for m in modes:
     for nx in nxs:
         a, b = runs.get(("off", nx)), runs.get((m, nx))
         if a and b:
-            row.append("C%d err %.2f, AAM %.0fx / %.0fx" % (nx, b["phi_linf"] / a["phi_linf"],
-                                                          abs(a["dL_over_L_end"]) / abs(b["dL_over_L_end"]),
-                                                          a["dL_over_L_max"] / b["dL_over_L_max"]))
+            if "closure" in m:  # the closure drift is round-off: no ratio
+                row.append("C%d err %.2f, AAM at round-off" % (nx, b["phi_linf"] / a["phi_linf"]))
+                continue
+            r1, r2 = abs(a["dL_over_L_end"]) / abs(b["dL_over_L_end"]), a["dL_over_L_max"] / b["dL_over_L_max"]
+            fmt = "%.1fx" if max(r1, r2) < 10 else "%.0fx"
+            row.append(("C%d err %.2f, AAM " + fmt + " / " + fmt) % (nx, b["phi_linf"] / a["phi_linf"], r1, r2))
     print("%-10s %s" % (m, "   ".join(row)))

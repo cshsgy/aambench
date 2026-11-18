@@ -144,6 +144,7 @@ def main(argv=None):
     ap.add_argument("--out", default=".")
     ap.add_argument("--every", type=int, default=50, help="store the series every N steps")
     ap.add_argument("--closure", action="store_true", help="dynamics/conserve-axial-momentum-closure: true (full only, #365)")
+    ap.add_argument("--snapy-sha", default=os.environ.get("SNAPY_SHA", ""), help="source sha of the installed snapy, for the record")
     args = ap.parse_args(argv)
     torch.set_default_dtype(torch.float64)
     io = args.interp_order if args.interp_order is not None else (None if args.mode == "off" else 4)
@@ -185,7 +186,8 @@ def main(argv=None):
     linf, l2 = phi_error(blocks, mesh_vars, phi0)
     import snapy
     out = {"mode": args.mode + ("+closure" if args.closure else ""), "nx": args.nx, "interp_order": io, "days": args.days, "device": args.device,
-           "snapy": getattr(snapy, "__version__", "?"), "torch": torch.__version__,
+           "snapy": getattr(snapy, "__version__", "?"), "snapy_sha": args.snapy_sha, "torch": torch.__version__,
+           "omp_threads": os.environ.get("OMP_NUM_THREADS", ""), "argv": sys.argv[1:],
            "cycles": cycle, "dt_first": series[0]["dt"] if series else None, "L0": l0,
            "dL_over_L_end": (aam(blocks, mesh_vars, SW_OMEGA) - l0) / l0, "dL_over_L_max": drift_max,
            "phi_linf": linf, "phi_l2": l2, "dM_over_M": (mass(blocks, mesh_vars) - m0) / m0,
