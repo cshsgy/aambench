@@ -31,6 +31,6 @@ i.e.\ \texttt{full} stays below \texttt{off} at every resolution (0.29, 0.42, 0.
 Absolute AAM drift at 62 d, $\texttt{off}/\texttt{full}$: 132x / 271x / 414x by end value and 80x / 146x / 215x by
 per-step maximum (\texttt{full} end drift $+2.2\times10^{-5}$, $+1.1\times10^{-6}$, $+2.1\times10^{-7}$, no sign
 change); \texttt{transport} cuts the drift only 1.8--1.9x. Mass is conserved to $7\times10^{-13}$ or better; all
-runs finite; wall time 53--245 s per run on 12 CPU threads. \hypothesis\ (from the thread, untested here): the
+runs finite; wall time 53--245 s per run on 12 CPU threads. \hyp\ (from the thread, untested here): the
 second-order behaviour of \texttt{full} comes from the C2-type local torque it shares with the testbed scheme, not
 from the cubic ghost rule, since \texttt{transport} with the same ghosts keeps order 2.3--2.4.
