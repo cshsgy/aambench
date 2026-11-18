@@ -34,3 +34,8 @@ change); \texttt{transport} cuts the drift only 1.8--1.9x. Mass is conserved to 
 runs finite; wall time 53--245 s per run on 12 CPU threads. \hyp\ (from the thread, untested here): the
 second-order behaviour of \texttt{full} comes from the C2-type local torque it shares with the testbed scheme, not
 from the cubic ghost rule, since \texttt{transport} with the same ghosts keeps order 2.3--2.4.
+With the global closure of \#365 on top (\texttt{conserve-axial-momentum-closure: true}, same runs): the absolute AAM
+drift is at round-off, $2.4\times10^{-13}$ / $5.0\times10^{-13}$ / $7.5\times10^{-13}$ by per-step maximum at
+C16/C32/C48, and the $\phi$ error is that of \texttt{full} to three digits ($L^\infty$ $2.098\times10^{-3}$ /
+$6.097\times10^{-4}$ / $2.599\times10^{-4}$), so the uniform solid-body increment costs no accuracy on this flow
+(\measured).

@@ -16,7 +16,7 @@ runs = {}
 for p in sorted(glob.glob(os.path.join(d, "w2_*_C*.json"))):
     r = json.load(open(p))
     runs[(r["mode"], r["nx"])] = r
-modes = [m for m in ("off", "transport", "full") if any(k[0] == m for k in runs)]
+modes = [m for m in ("off", "transport", "full", "full+closure") if any(k[0] == m for k in runs)]
 nxs = sorted({k[1] for k in runs})
 r0 = next(iter(runs.values()))
 print("Williamson 2 at the Earth's rate, %g days, snapy %s, torch %s, device %s"
