@@ -17,3 +17,20 @@ the test does not use it.
 The same file run with \texttt{--device cuda} on one H100 (\texttt{results/snapy/aam\_test\_cbf86830\_cuda.txt}, CUDA source build
 8\,min\,45\,s) passes with identical figures on every arm except the 9x9 noisy-wind \texttt{off} drift (7.6e-7 vs 1.3e-6; different
 device noise), so the CPU and CUDA paths agree on all AAM claims at this pin.
+
+\paragraph{W2 convergence to 62 days (lane T, CPU).}\measured\ (\texttt{scripts/snapy/w2\_convergence.py},
+\texttt{results/snapy/w2/}): the clean Williamson-2 flow at the Earth's rate ($u_0=38.6$, $\phi_0=2.94\times10^4$,
+shallow-roe, WENO5 without scale or shock, rk3 at CFL 0.5, one block per panel) run to 62.0 d at C16/C32/C48 on snapy
+main \texttt{cbf86830}, with \texttt{off}, \texttt{transport} and \texttt{full} (the latter two with
+\texttt{interp\_order: 4}). Every figure reproduces the thread's gap-3 rows (Jiheng, 11-14, measured on
+\texttt{xiz/full-on-357 1be61abd}) to the printed digits. $L^\infty$ error of $\phi$ against the steady state,
+relative to $\phi_0$: \texttt{off} $7.361\times10^{-3}$ / $1.453\times10^{-3}$ / $5.214\times10^{-4}$ (orders 2.34, 2.53);
+\texttt{transport} $5.363\times10^{-3}$ / $1.114\times10^{-3}$ / $4.204\times10^{-4}$ (2.27, 2.40);
+\texttt{full} $2.106\times10^{-3}$ / $6.091\times10^{-4}$ / $2.598\times10^{-4}$ (1.79, 2.10; $L^2$ 1.91, 2.02),
+i.e.\ \texttt{full} stays below \texttt{off} at every resolution (0.29, 0.42, 0.50 of it) but with a lower order.
+Absolute AAM drift at 62 d, $\texttt{off}/\texttt{full}$: 132x / 271x / 414x by end value and 80x / 146x / 215x by
+per-step maximum (\texttt{full} end drift $+2.2\times10^{-5}$, $+1.1\times10^{-6}$, $+2.1\times10^{-7}$, no sign
+change); \texttt{transport} cuts the drift only 1.8--1.9x. Mass is conserved to $7\times10^{-13}$ or better; all
+runs finite; wall time 53--245 s per run on 12 CPU threads. \hypothesis\ (from the thread, untested here): the
+second-order behaviour of \texttt{full} comes from the C2-type local torque it shares with the testbed scheme, not
+from the cubic ghost rule, since \texttt{transport} with the same ghosts keeps order 2.3--2.4.

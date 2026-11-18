@@ -1,0 +1,20 @@
+Williamson 2 at the Earth's rate, 62 days, snapy 0.0.0, torch 2.10.0+cu128, device cpu
+mode          C   io  cycles   phi_Linf     phi_L2     dL/L_end     dL/L_max      dM/M  wall_s
+off          16 None    4000  7.361e-03  4.111e-03   -2.923e-03    2.923e-03  -2.4e-13      53
+off          32 None    8185  1.453e-03  5.367e-04   -3.040e-04    3.040e-04  -4.9e-13     103
+off          48 None   12376  5.214e-04  1.695e-04   -8.527e-05    8.527e-05  -7.4e-13     161
+transport    16    4    4002  5.363e-03  2.811e-03   -1.622e-03    1.622e-03  -2.4e-13      56
+transport    32    4    8185  1.114e-03  4.158e-04   -1.587e-04    1.587e-04  -4.9e-13     119
+transport    48    4   12376  4.204e-04  1.483e-04   -4.466e-05    4.466e-05  -7.4e-13     191
+full         16    4    4013  2.106e-03  8.867e-04   +2.218e-05    3.649e-05  -2.4e-13      69
+full         32    4    8186  6.091e-04  2.363e-04   +1.122e-06    2.079e-06  -4.9e-13     143
+full         48    4   12376  2.598e-04  1.043e-04   +2.059e-07    3.966e-07  -7.4e-13     245
+
+observed order of the phi error between successive resolutions (Linf / L2)
+off        C16->C32 2.34 / 2.94   C32->C48 2.53 / 2.84
+transport  C16->C32 2.27 / 2.76   C32->C48 2.40 / 2.54
+full       C16->C32 1.79 / 1.91   C32->C48 2.10 / 2.02
+
+phi error of the mode over off (Linf), and AAM drift of off over the mode, by end value / by per-step max
+transport  C16 err 0.73, AAM 2x / 2x   C32 err 0.77, AAM 2x / 2x   C48 err 0.81, AAM 2x / 2x
+full       C16 err 0.29, AAM 132x / 80x   C32 err 0.42, AAM 271x / 146x   C48 err 0.50, AAM 414x / 215x
