@@ -1,0 +1,38 @@
+# snapy tests/test_axial_momentum_flux_form.py --device cuda, 1x H100 80GB (shared), pin chengcli/snapy main cbf8683009de2d4c211e65e5daeaf1ad1e05c80d
+# built from source: cmake -DCUDA=ON -DCMAKE_CUDA_ARCHITECTURES=90 -DNETCDF=OFF -DPNETCDF=OFF -DBUILD_TESTS=OFF; nvcc 12.5, driver 550.144.03, torch 2.10.0+cu128, kintera 2.6.10; configure+build 8m45s with 48 jobs
+# run 2026-11-18 06:01-06:56 UTC by chen sihe (ziwei), GPU shared at 30-70% util; exit 0
+(a) solid body    off       max |dL| / |L| over 20 steps = 1.679e-06 (final dL / L = +1.679e-06)  dE / E = -4.801e-08  max |v| / c_s = 2.681e-02
+(a) solid body    transport max |dL| / |L| over 20 steps = 9.522e-16 (final dL / L = -7.617e-16)  dE / E = -4.811e-08  max |v| / c_s = 2.681e-02
+(a) solid body    transport4 max |dL| / |L| over 20 steps = 9.522e-16 (final dL / L = -9.522e-16)  dE / E = -4.814e-08  max |v| / c_s = 2.681e-02
+(a) perturbed jet off       max |dL| / |L| over 20 steps = 1.676e-06 (final dL / L = +1.676e-06)  dE / E = -1.604e-07  max |v| / c_s = 3.485e-02
+(a) perturbed jet transport max |dL| / |L| over 20 steps = 9.522e-16 (final dL / L = -9.522e-16)  dE / E = -1.605e-07  max |v| / c_s = 3.485e-02
+(a) perturbed jet transport4 max |dL| / |L| over 20 steps = 1.143e-15 (final dL / L = -1.143e-15)  dE / E = -1.604e-07  max |v| / c_s = 3.485e-02
+(b) rest + transport: max |v| / c_s after 20 steps = 4.078e-11, max |L| / |L_solid body| = 6.581e-19
+(c) perturbed jet, transport, 200 steps: max |dL| / |L| = 1.143e-14, dE / E = -5.940e-07, max |v| / c_s = 3.160e-02
+(e) 9x9 noisy wind off       max |dL| / |L| over 20 steps = 7.621e-07  dE / E = -6.412e-08  max |v| / c_s = 2.739e-02
+(e) 9x9 noisy wind transport max |dL| / |L| over 20 steps = 9.530e-16  dE / E = -6.404e-08  max |v| / c_s = 2.739e-02
+(f) Coriolis, Omega = wind rate, absolute AAM: max |dL| / |L| over 20 steps = 4.047e-10 with full, 6.481e-09 with transport, 8.290e-07 with off
+(f) Coriolis, Omega = 14 wind rates, absolute AAM: max |dL| / |L| over 20 steps = 1.538e-09 with full, 1.162e-07 with transport, 9.940e-09 with off
+(g) traditional Coriolis, 8 m shell, Omega = wind rate, absolute AAM: max |dL| / |L| over 20 steps = 1.388e-08 with full, 1.441e-07 with transport, 1.273e-05 with off
+(g) traditional Coriolis, 8 m shell, Omega = 14 wind rates, absolute AAM: max |dL| / |L| over 20 steps = 8.168e-08 with full, 2.462e-06 with transport, 1.142e-06 with off
+(h) implicit 9 + Coriolis + vertical wind, Omega = wind rate, absolute AAM: max |dL| / |L| over 20 steps = 1.329e-08 with full, 1.524e-07 with transport, 1.264e-05 with off
+(h) implicit 9 + Coriolis + vertical wind, Omega = 14 wind rates, absolute AAM: max |dL| / |L| over 20 steps = 7.187e-08 with full, 2.521e-06 with transport, 1.219e-06 with off
+(h) implicit 9 + Coriolis + vertical wind + vapor, Omega = wind rate, absolute AAM: max |dL| / |L| over 20 steps = 1.330e-08 with full, 1.524e-07 with transport, 1.264e-05 with off
+(h) implicit 9 + Coriolis + vertical wind + vapor, Omega = 14 wind rates, absolute AAM: max |dL| / |L| over 20 steps = 7.189e-08 with full, 2.521e-06 with transport, 1.219e-06 with off
+(i) shallow water, Williamson 2, no rotation: max |dL| / |L| over 20 steps = 1.236e-15 with transport, 9.299e-07 with off; max |dphi| / phi0 = 8.378e-05 and 7.643e-05
+(i) shallow water, Williamson 2, Omega = u0 / a: max |dL| / |L| over 20 steps = 9.488e-07 with transport, 1.584e-06 with off; max |dphi| / phi0 = 1.142e-04 and 1.027e-04
+(i) shallow water, Williamson 2, Omega of the Earth: max |dL| / |L| over 20 steps = 1.344e-05 with transport, 1.448e-05 with off; max |dphi| / phi0 = 5.338e-04 and 5.768e-04
+(j) noise on rest, transport at 1.00 Omega: KE / KE0 = 6.597e-03 at 2000 steps and 3.298e-03 at 4000; off 3.122e-03; ratio to off 1.056
+(j) noise on rest, transport at 4.00 Omega: KE / KE0 = 5.654e-04 at 2000 steps and 1.420e-04 at 4000; off 1.036e-04; ratio to off 1.371
+(k) shallow water, Williamson 2, Omega of the Earth, 200 steps: max |dL| / |L| = 4.883e-06 with full, 1.454e-04 with off (29.8 times below)
+(l) f, Omega = wind rate, closure True: max |dL| / |L| = 1.142e-15
+(l) f, Omega = 14 wind rates, closure True: max |dL| / |L| = 1.206e-15
+(l) g, Omega = wind rate, closure True: max |dL| / |L| = 1.246e-13
+(l) g, Omega = 14 wind rates, closure True: max |dL| / |L| = 2.365e-13
+(l) h, Omega = wind rate, closure True: max |dL| / |L| = 1.142e-15
+(l) h, Omega = 14 wind rates, closure True: max |dL| / |L| = 1.206e-15
+(l) Williamson 2, 1 Omega, closure True: max |dL| / |L| = 1.258e-15
+(l) Williamson 2, 4 Omega, closure True: max |dL| / |L| = 1.179e-15
+(d) default off; Cartesian: the block builds with the key on
+(d) full without interp_order: 4 is refused
+PASS
