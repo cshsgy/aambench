@@ -34,6 +34,12 @@ change at the 100-step sampling of the series); \texttt{transport} cuts the drif
 runs finite; wall time 53--245 s per run on 12 CPU threads (snapy sha, command and norms in \texttt{results/snapy/w2/README.md}). \hyp\ (from the thread, untested here): the
 second-order behaviour of \texttt{full} comes from the C2-type local torque it shares with the testbed scheme, not
 from the cubic ghost rule, since \texttt{transport} with the same ghosts keeps order 2.3--2.4.
+A C64 row (same runs, \texttt{OMP\_NUM\_THREADS=16}, 16{,}567 steps, 249--391 s) extends the ladder:
+$L^\infty$ \texttt{off} $2.476\times10^{-4}$, \texttt{transport} $2.062\times10^{-4}$, \texttt{full}
+$1.398\times10^{-4}$, i.e.\ C48$\to$C64 orders 2.59 / 2.48 / 2.15 ($L^2$ 2.76 / 2.43 / 2.03), so \texttt{full}
+stays near second order while \texttt{off} and \texttt{transport} climb towards 2.5; \texttt{full}'s error is 0.56 of
+\texttt{off}'s at C64 and its AAM gain over \texttt{off} grows to 540x by end value (281x by per-step maximum;
+end drift $+6.5\times10^{-8}$), \texttt{transport} stays at 1.9x (\measured).
 With the global closure of \#365 on top (\texttt{conserve-axial-momentum-closure: true}, same runs): the absolute AAM
 drift is at round-off, $2.4\times10^{-13}$ / $5.0\times10^{-13}$ / $7.5\times10^{-13}$ by per-step maximum at
 C16/C32/C48, and the $\phi$ error is within 0.4\% ($L^\infty$) and 1.0\% ($L^2$) of \texttt{full}'s ($L^\infty$ $2.098\times10^{-3}$ /
