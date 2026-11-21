@@ -111,9 +111,7 @@ $\bm x^TA\bm x$ across the kink. Whether such a $G$ exists with a stencil of fix
 as chapter~\ref{sec:seam}; $\psi=\Omega s^2$ on the unit sphere; unit $\Omega a=\max_c|\nabla\psi_c|=1$; polar axis
 and an axis tilted $30^\circ$ about $x$). Each physical seam gets the edge coordinate $u=(\bm x_c-\bm m)\cdot\bm t$
 ($\bm m$ the mid-edge point, $\bm t$ the seam tangent, fixed in space for both sides) and the across-seam direction
-$\bm n_\perp=\bm t\times\bm x_c$. Note on units: chapter~\ref{sec:seam} divides by the largest \emph{component} of
-$\nabla\psi$ ($0.770\,\Omega a$ on the polar axis, $0.97\,\Omega a$ tilted); its row-0 numbers are $1.30\times$ the
-polar numbers here. That is a labelling error there, to be corrected in its own PR.
+$\bm n_\perp=\bm t\times\bm x_c$. Chapter~\ref{sec:seam} uses the same unit.
 \begin{center}\small\begin{tabular}{llrrrrrrrr}\toprule
 axis & $G$ & $N$ & row-0 max & $|\bm e\cdot\bm n_\perp|$ row 0 & $|\bm e\cdot\bm t|$ row 0 & even & couple & rms$|\bm Z|$ & rms$|\bm F|$\\\midrule
 polar & 2-pt & 8 & 0.204 & 0.171 & 0.112 & 1.00 & 0.136 & 0.0126 & 0.0068\\
@@ -186,13 +184,13 @@ $O(h^2)$ already for the two-point flux, so they constrain a re-weighted defect 
 a footprint of width $O(h)$; they do not bound its pointwise size, and they say nothing about the zero-moment part. \hyp\
 Whether a compact re-weighting exists that removes the row-0 defect is therefore open; the moments do not forbid it.
 The measured fact is only that the six-point flux moves part of the defect from row 0 into row 1 (row-1 max
-$0.06$--$0.09$ in chapter~\ref{sec:seam}'s unit, not converging) and lowers the row-0 max by $9$--$17\,\%$.
+$0.045$--$0.067$, chapter~\ref{sec:seam}, not converging) and lowers the row-0 max by $9$--$17\,\%$.
 
 The side study's statement that the first moment of $\bm e$ in rows 0, 1, 2 is $-\tfrac14,-\tfrac18,-\tfrac1{12}\,
 \sin2\beta$ is \emph{not reproduced} here: the across-seam row-0 amplitude is $0.17$--$0.25$ at the corners in units of
-$\Omega a$ ($0.22$--$0.33$ in chapter~\ref{sec:seam}'s unit, which is where the "about $1/4$" of earlier drafts came
-from), its profile along the edge on the polar axis is even in $u$, not $\sin2\beta$, and the row-1 and row-2
-amplitudes of the six-point flux are $0.06$--$0.09$ and $0.01$--$0.03$ (chapter~\ref{sec:seam}, in its unit), not $1/8$ and
+$\Omega a$ (the "about $1/4$" of earlier drafts came from chapter~\ref{sec:seam}'s former normalisation by the largest
+component of $\nabla\psi$, $0.770\,\Omega a$, which read $0.22$--$0.33$), its profile along the edge on the polar axis is even in $u$, not $\sin2\beta$, and the row-1 and row-2
+amplitudes of the six-point flux are $0.045$--$0.067$ and $0.006$--$0.025$ (chapter~\ref{sec:seam}), not $1/8$ and
 $1/12$; for the two-point flux rows 1 and 2 converge. Part 2 does not state the definition of its first moment, so the
 comparison is with the quantities defined above; the geometric $\tfrac12\sin2\beta$ offset of chapter~\ref{sec:seam}
 is the only $\sin2\beta$ in the problem that is reproduced. \hyp\ Their three coefficients may be the row-0, row-1,

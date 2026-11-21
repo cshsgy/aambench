@@ -67,7 +67,7 @@ def analyse(g, ghost='linear', stencil='6', axis=np.array([0,0,1.0])):
         for k,w in W.items():
             for c,wc in weights(p,i+k*di,j+k*dj).items():
                 force[c]+= w*wc*jump*l*n/area[c]
-    ref=np.abs(gexact).max()
+    ref=np.linalg.norm(gexact,axis=1).max()   # max_c |grad psi_c| = Omega a
     err=np.linalg.norm(force-gexact,axis=1)/ref
     d=g['dist']
     return [err[d==0].max(), np.sqrt((err[d==0]**2).mean()), err[d==1].max(), err[d==2].max(), err[d>=3].max()]
