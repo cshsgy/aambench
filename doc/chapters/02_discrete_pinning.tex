@@ -66,11 +66,11 @@ and $\bm r_c=O(h)$ for every stencil whose weights are bounded: $dq$ across a li
 face measure over the cell volume is $O(1/h)$. So the only way $\bm e$ can stay $O(1)$ is $E_c=O(1)$: the stencil
 must fail to reproduce the gradient of linear functions at that cell. \measured\ (last three columns of the table;
 $E$ assembled with the same weights as $\bm e$, from the three functions $\bm a\cdot\bm x$): in the interior
-$|E|$ falls like $h^2$ ($0.026,0.0066,0.0017,0.0004$ for the two-point flux, $N=8$--$64$), on row 0 it stays at
+$|E|$ falls like $h^2$ ($0.026,0.0066,0.0017,0.0004$ for the two-point flux, $N=8$--$64$), its row-0 max stays at
 $0.37$--$0.42$ for every stencil, and the residual $|\bm e-E\nabla\psi|$ on row 0 falls like $h$
 ($0.051,0.026,0.014,0.007$ two-point polar; $0.072$--$0.012$ tilted). The orders close: the non-converging defect is
-the linear-function error of the seam stencil, the quadratic part of $\psi$ contributes $O(h)$. Why the seam stencil
-is not linear-exact: at a seam face the jump $(d\psi)_f$ is taken between the two mirror cells across the seam
+the linear-function error of the seam stencil, the quadratic part of $\psi$ contributes $O(h)$. \hyp\ Why the seam
+stencil is not linear-exact (an explanation that neither the derivation nor the script tests): at a seam face the jump $(d\psi)_f$ is taken between the two mirror cells across the seam
 (the neighbour's centre is the exact mirror of the own centre through the seam great circle,
 chapter~\ref{sec:seam}), while the weights that deposit the jump are those of the panel-local stencil, which
 reaches the neighbour panel at the continuation of the own grid line and is interpolated along the neighbour's
@@ -78,8 +78,9 @@ edge; the link and the deposit point differ by the $\tfrac12\sin2\beta$-cell off
 and by the kink of the coordinate lines, an $O(h)$ mismatch divided by $h$. Linear interpolation along the
 neighbour's edge (linear or cubic in the index) reproduces linear functions along that edge, but that is not the
 property that the gradient needs; the mismatch is between where the jump is measured and where it is deposited.
-The six-point flux spreads the same mismatch over two rows (chapter~\ref{sec:seam}), which lowers row 0 by a tenth
-and raises row 1, and the cubic ghosts change it by under a tenth. The profile that results is even along the edge
+The six-point flux spreads the same mismatch over two rows (chapter~\ref{sec:seam}), which lowers the row-0 max by
+$9$--$17\,\%$ on the polar axis ($0.252\to0.209$ at $N=64$) and by about $9\,\%$ tilted, and raises row 1; the cubic
+ghosts change the row-0 max by under a tenth for $N\ge16$ and by $+24\,\%$ at $N=8$ polar ($0.186\to0.231$). The profile that results is even along the edge
 on the polar axis (next paragraph) because both the mirror offset and the deposit weights are symmetric under
 $\beta\to-\beta$ there.
 
@@ -133,24 +134,31 @@ Columns: row-0 max of $|\bm e|$; row-0 max of the across-seam and along-seam com
 across-seam profile $\bm e\cdot\bm n_\perp(u)$ on one side that is even in $u$; \emph{couple} $=|\sum_{\rm both\ sides}
 V_c\,\bm e_c\cdot\bm n_\perp|/\sum|V_c\,\bm e_c\cdot\bm n_\perp|$ over row 0 (0 = exactly equal and opposite on the two
 sides); $\bm Z=\sum V_c\bm e_c$ and $\bm F=\sum V_c\bm e_c u_c$ over all cells within three rows of the seam on both
-sides, rms over the 12 seams. The full table (all $N$, both ghost orders, the radial part, $E$ and the residual) is
-in the results file.
+sides, rms over the 12 seams. The full table (all $N$, both ghost orders, the radial part, $E$ and the residual, the
+per-seam AAM torque and the profile fits) is in the results file.
 
 What the table says (\measured): (1) the non-converging part of $\bm e$ is the across-seam component, $0.17$--$0.28$
 at the corners (two-point polar $0.171\to0.252$ rising with $N$, six-point $0.17$--$0.21$, tilted $0.24$--$0.28$),
-zero at mid-edge, and on the polar axis \emph{even} in $u$ (even share 1.000; a one-sided fit of $\bm e\cdot\bm n_\perp$
-to $\sin^2\beta$ leaves a relative residual of $0.04$--$0.18$, to $\sin2\beta$ of $1.0$); on the tilted axis the
-profile is mixed (even share $0.55$--$0.71$, and on the seam between panels 2 and 4 mostly odd). The along-seam
+zero at mid-edge, and on the polar axis \emph{even} in $u$ (even share 1.000; a one-sided least-squares fit of
+$\bm e\cdot\bm n_\perp$ to $\sin^2\beta$, $\beta=\arcsin u$, leaves a relative residual of $0.31,0.14,0.085,0.068$ for the
+two-point flux and $0.37$--$0.11$ six-point, falling with $N$; a fit to $\sin2\beta$ leaves $1.000$; the fit columns of
+the results file); on the tilted axis the profile is mixed (even share $0.55$--$0.71$, the fits leave $0.55$--$0.69$ and
+$0.70$--$0.86$, and on the seam between panels 2 and 4 mostly odd). The along-seam
 component sits in the corner cells and does not converge either ($0.06$--$0.11$ polar, $0.19$--$0.22$ tilted).
 The radial part of $\bm e$ converges ($0.020,0.010,0.005,0.003$ on row 0 for the two-point flux). (2) On the two sides
 of a seam the across-seam defect has opposite signs and equal magnitude up to $O(h)$: the couple measure falls like
 $h$ for the two-point flux on either axis ($0.14,0.06,0.03,0.01$), and more slowly for the six-point flux on the
 tilted axis ($0.08,0.06,0.05,0.04$). (3) The net force $\bm Z$ and the first moment $\bm F$ of the defect over a seam
-vanish with resolution, roughly like $h^2$, for every stencil and axis; the net AAM torque of the defect per seam,
-$\sum V_c\bm K_c\cdot\bm e_c$, is at round-off on the polar axis ($\le5\times10^{-16}$) and $\le2.5\times10^{-5}$
-tilted (Xinyue's check on the same operators, review of PR~1). So the pinned force fails (c) by a seam-local defect
-of $O(1)$ amplitude, mostly a couple across the seam, that injects no net force, moment or AAM into the pair of seam
-rows beyond $O(h^2)$; a global closure can hide it in a budget while the local field stays wrong.
+vanish with resolution, roughly like $h^2$, for every stencil and axis. The net AAM torque of the defect per seam,
+$\sum V_c\bm K_c\cdot\bm e_c$ over the same cells (the \emph{tau} column of the results file, max over the 12 seams), is
+at round-off on the polar axis ($\le4.4\times10^{-16}$, every stencil and $N$); on the tilted axis it is small but not
+clearly convergent: $9.8\times10^{-4},2.4\times10^{-5},4.6\times10^{-5},2.0\times10^{-5}$ for the two-point flux and
+$1.7\times10^{-3},4.1\times10^{-4},1.2\times10^{-4},3.2\times10^{-5}$ for the six-point flux with linear ghosts (cubic
+within $10\,\%$), $N=8$--$64$. Xinyue's check on the same operators (review of PR~1; two-point flux, $N=16$ and $64$)
+gave the two-point values above. So the pinned force fails (c) by a seam-local defect of $O(1)$ amplitude, mostly a
+couple across the seam, that injects no net force or first moment into the pair of seam rows beyond $O(h^2)$ and no
+net AAM on the polar axis (on the tilted axis at most $2\times10^{-3}$ in the table's unit, order unresolved); a global
+closure can hide it in a budget while the local field stays wrong.
 
 \begin{claim}[zeroth and first moments of $G^T d\psi$ over the seam-face footprint]\derived\
 Let $G$ have, for each face $f$, weights whose sum is the face measure, $\sum_c\bm g_{fc}=\bm n_f l_f$. Then
@@ -163,24 +171,28 @@ $\sum_c \bm g_{fc}\otimes(\bm x_c-\bm x_f)=0$, then also $\sum_c (G^T d\psi)_c\o
 $\sum_c (G^T d\psi)_c=\sum_f (d\psi)_f\sum_c \bm g_{fc}$, and $\sum_c(G^T d\psi)_c\otimes\bm x_c=\sum_f(d\psi)_f
 \sum_c \bm g_{fc}\otimes\bm x_c=\sum_f (d\psi)_f\,\bm n_f l_f\otimes\bm x_f$ under the second assumption.
 \end{proof}
-\measured\ (the footprint lines of the results file, seam faces only, three stencils): the zeroth moment agrees between
-the two-point and the two six-point fluxes to $10^{-16}$ at every $N$ and axis, as the claim says. The first-moment
-hypothesis holds only approximately for these stencils, because the ghosts are interpolated linearly in the index along
-a curved neighbour row: the first moments differ by $3.9\times10^{-3},4.8\times10^{-4},6.0\times10^{-5},
-7.5\times10^{-6}$ ($N=8$--$64$, polar, against $|\bm F|=0.78$--$0.10$), i.e.\ like $h^3$. What follows, and no more:
+\measured\ (the footprint lines of the results file: the force deposited by the faces of \emph{one} seam alone, its
+moments $\bm M_0=\sum_c(G^Td\psi)_c$ and $\bm M_1=\sum_c(G^Td\psi)_c\otimes\bm x_c$ compared between the three stencils
+seam by seam, max over the 12 seams; the sum over all seams vanishes by symmetry and would test nothing): the zeroth
+moment agrees between the two-point and the two six-point fluxes to $8\times10^{-17}$ at every $N$ and axis, against
+per-seam $|\bm M_0|=0.15,0.075,0.038,0.019$ (polar, $N=8$--$64$), as the claim says. The first-moment hypothesis holds
+only approximately for these stencils, because the ghosts are interpolated linearly in the index along a curved
+neighbour row: the first moments differ by $7.5\times10^{-4},9.6\times10^{-5},1.2\times10^{-5},1.5\times10^{-6}$
+($N=8$--$64$, polar, against per-seam $|\bm M_1|=0.098,0.050,0.025,0.013$), i.e.\ like $h^3$ (a ratio of 8 per
+doubling); tilted $5.6\times10^{-4}$ to $1.1\times10^{-6}$ against $0.074$--$0.0094$. What follows, and no more:
 a re-weighting of the seam faces that keeps the weight sums leaves the net $V\bm e$ of the footprint unchanged, and one
 whose deposit points stay at the face midpoints leaves its first moment unchanged to $O(h^3)$. Both moments are
 $O(h^2)$ already for the two-point flux, so they constrain a re-weighted defect only to an average $|\bm e|=O(h)$ over
 a footprint of width $O(h)$; they do not bound its pointwise size, and they say nothing about the zero-moment part. \hyp\
 Whether a compact re-weighting exists that removes the row-0 defect is therefore open; the moments do not forbid it.
 The measured fact is only that the six-point flux moves part of the defect from row 0 into row 1 (row-1 max
-$0.06$--$0.09$ in chapter~\ref{sec:seam}'s unit, not converging) and lowers row 0 by a tenth.
+$0.06$--$0.09$ in chapter~\ref{sec:seam}'s unit, not converging) and lowers the row-0 max by $9$--$17\,\%$.
 
 The side study's statement that the first moment of $\bm e$ in rows 0, 1, 2 is $-\tfrac14,-\tfrac18,-\tfrac1{12}\,
 \sin2\beta$ is \emph{not reproduced} here: the across-seam row-0 amplitude is $0.17$--$0.25$ at the corners in units of
 $\Omega a$ ($0.22$--$0.33$ in chapter~\ref{sec:seam}'s unit, which is where the "about $1/4$" of earlier drafts came
 from), its profile along the edge on the polar axis is even in $u$, not $\sin2\beta$, and the row-1 and row-2
-amplitudes of the six-point flux are $0.06$--$0.09$ and $0.01$--$0.03$ (chapter~\ref{sec:seam}), not $1/8$ and
+amplitudes of the six-point flux are $0.06$--$0.09$ and $0.01$--$0.03$ (chapter~\ref{sec:seam}, in its unit), not $1/8$ and
 $1/12$; for the two-point flux rows 1 and 2 converge. Part 2 does not state the definition of its first moment, so the
 comparison is with the quantities defined above; the geometric $\tfrac12\sin2\beta$ offset of chapter~\ref{sec:seam}
 is the only $\sin2\beta$ in the problem that is reproduced. \hyp\ Their three coefficients may be the row-0, row-1,
