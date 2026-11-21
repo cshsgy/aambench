@@ -89,7 +89,7 @@ def analyse(g,axis=np.array([0,0,1.0])):
         d=0.5*l*(psi[cR]-psi[cL])
         gGG[cL]+=d*n/area[cL]; gGG[cR]+=d*n/area[cR]      # n is outward from L = inward to R; for R: 0.5 l (psi_L-psi_R)*(-n)=same
         gGG0[cL]+=0.5*l*(psi[cL]+psi[cR])*n/area[cL]; gGG0[cR]+=0.5*l*(psi[cL]+psi[cR])*(-n)/area[cR]
-    ref=np.abs(gexact).max(axis=1).max()  # = Omega*a
+    ref=np.linalg.norm(gexact,axis=1).max()  # max_c |grad psi_c| = Omega a (the largest component, 0.770 Omega a, was used before)
     err=np.linalg.norm(gGG-gexact,axis=1)/ref
     err0=np.linalg.norm(gGG0-gexact,axis=1)/ref
     out={}

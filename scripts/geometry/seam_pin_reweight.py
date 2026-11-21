@@ -24,9 +24,10 @@ def analyse_w(g, stencil):
             w=X@np.linalg.solve(X.T@X, np.array([1.0,0,0]))
         for c,wc in zip(S,w):
             force[c]+=wc*l*(psi[cR]-psi[cL])*n/area[c]
-    ref=np.abs(gexact).max()
+    ref=np.linalg.norm(gexact,axis=1).max()   # max_c |grad psi_c| = Omega a
     err=np.linalg.norm(force-gexact,axis=1)/ref
     d=g['dist']; return [err[d==k].max() for k in range(3)]+[err[d>=3].max()]
+print("  N stencil  [row0 max, row1 max, row2 max, interior max] / (Omega a); polar axis, psi = Omega s^2")
 for N in [8,16,32]:
     g=build(N)
     print(N,'2pt     ',np.round(analyse_w(g,'2pt'),4))
