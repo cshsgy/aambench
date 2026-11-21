@@ -18,8 +18,9 @@ direction in space, so a couple is the OPPOSITE sign on the two sides). Per sten
   fit s2/2b  mean over the 12 seams of the relative residual of a one-sided least-squares fit of the row-0 profile
              e.n_perp(beta) to sin^2 beta and to sin 2 beta (beta = arcsin u, the angle along the seam from mid-edge)
 The footprint lines take the force deposited by the faces of ONE seam alone (its footprint) and compare the zeroth
-and first moments between the three stencils, seam by seam (max over the 12 seams); the sums over all seams vanish
-by symmetry and would test nothing.
+(M0 = sum_c V_c f_c) and first (M1 = sum_c V_c f_c x_c) moments between the three stencils, seam by seam (max over
+the 12 seams); the sums over all seams vanish by symmetry and would test nothing. M0, M1 are moments of the
+seam-face force alone, not the table's Z, F (moments of the full defect V e over the seam rows).
 Everything is per unit (Omega a); the solid-body state psi = Omega s^2 with a polar or a 30 deg tilted axis.
 """
 import sys, os, numpy as np
@@ -166,4 +167,4 @@ if __name__=='__main__':
             zmax=max(np.abs(z).max() for z in z2.values()); fmax=max(np.abs(f).max() for f in f2.values())
             for key in (('6','linear'),('6','cubic')):
                 dz=max(np.abs(seamZ[key][k]-z2[k]).max() for k in z2); df=max(np.abs(seamF[key][k]-f2[k]).max() for k in f2)
-                print(f"{name:>6} {N:3d} seam-face footprint moments per seam (max over the 12 seams) vs 2-point, {key[0]}-point {key[1]}: |dZ| {dz:.1e} (|Z| {zmax:.1e}), |dF| {df:.1e} (|F| {fmax:.1e})", flush=True)
+                print(f"{name:>6} {N:3d} seam-face footprint moments per seam (max over the 12 seams) vs 2-point, {key[0]}-point {key[1]}: |dM0| {dz:.1e} (|M0| {zmax:.1e}), |dM1| {df:.1e} (|M1| {fmax:.1e})", flush=True)
