@@ -1,17 +1,16 @@
 \section{Discrete requirements and the pinned force}
 \label{sec:pinning}
 
-\paragraph{Setting.} A finite-volume grid with cells $c$ of volume $V_c$ and faces $f$; $\bm v_c$ the cell
-velocity, $\bm K_c$ the unit zonal direction at the cell centre, $\psi_c=\Omega s_c^2$ the planetary AAM per
-unit mass at the centre. $G$ is a linear map from cell velocities to face mass fluxes,
-$(G\bm v)_f=\sum_c g_{fc}\cdot\bm v_c$ (mass flux through $f$ in the direction of the face normal $\bm n_f$,
-per unit density; the density is uniform in everything below and drops out), and $(d\psi)_f=\psi_{R(f)}-\psi_{L(f)}$
-the jump of $\psi$ across $f$ in that direction. $G$ is \emph{compact} when $g_{fc}\ne0$ only for cells within a
-fixed number of layers of $f$, and \emph{linear-exact} when $G$ applied to the cell values of a linear function of
-position returns the exact face value. $C$ is the discrete Coriolis operator, $(C\bm v)_c$ the force per unit mass
-on cell $c$; the inner product is $\langle\bm u,\bm w\rangle_V=\sum_c V_c\,\bm u_c\cdot\bm w_c$. Solid-body
-rotation about the axis is $\bm v=\bm K$ with $|\bm K_c|=s_c$ absorbed into $\bm K_c$ in this section, i.e.\
-$\bm K_c=s_c\hat{\bm e}_{\lambda,c}$.
+\paragraph{Setting.} A finite-volume grid with cells $c$ of volume $V_c>0$ and faces $f$; $\bm v_c\in\mathbb R^3$ the
+cell velocity (every cell vector in this chapter is a vector of $\mathbb R^3$ attached to the cell centre, not a
+tangential vector; the lemma therefore pins all three components of $C\bm K$), $\bm K_c$ the solid-body velocity
+$\hat{\bm z}\times\bm x_c$ (so $|\bm K_c|=s_c$), $\psi_c=\Omega s_c^2$ the planetary AAM per unit mass at the centre.
+$G$ is a linear map from cell velocities to face mass fluxes, $(G\bm v)_f=\sum_c \bm g_{fc}\cdot\bm v_c$ (mass flux
+through $f$ along the face normal $\bm n_f$, per unit density; the density is uniform below and drops out), and
+$(d\psi)_f=\psi_{R(f)}-\psi_{L(f)}$ the jump of $\psi$ across $f$ in that direction. $G$ is \emph{compact} when
+$\bm g_{fc}\ne0$ only for cells within a fixed number of layers of $f$. $C$ is the discrete Coriolis operator,
+$(C\bm v)_c$ the force per unit mass on cell $c$; the inner product is $\langle\bm u,\bm w\rangle_V=\sum_c V_c\,
+\bm u_c\cdot\bm w_c$.
 
 \paragraph{Requirements.}
 \begin{enumerate}
@@ -19,149 +18,171 @@ $\bm K_c=s_c\hat{\bm e}_{\lambda,c}$.
 \item[(b)] Exact closure of the AAM budget against the mass flux $G$: for all $\bm v$,
 \[ \sum_c V_c\,\bm K_c\cdot(C\bm v)_c=-\Omega\sum_f (G\bm v)_f\,(d\psi)_f .\]
 The right side is the planetary AAM carried through the faces by the mass flux $G\bm v$; (b) says the Coriolis
-torque on the relative AAM equals minus that transport, which is the discrete form of $D(s u)/Dt+D\psi/Dt$
-having no Coriolis part (chapter~\ref{sec:continuous}).
-\item[(c)] Consistency: $C\bm K$ is the cell-form Coriolis force on solid-body rotation, $(C_{\rm cell}\bm K)_c=
--2\bm\Omega\times\bm K_c$ up to the metric term, i.e.\ $C\bm K=\nabla\psi$ at the cell centres (per unit mass,
-$-2\bm\Omega\times\bm K_c-\bm K_c\cdot\nabla\bm K_c=\nabla\psi_c$ on the sphere).
+torque on the relative AAM equals minus that transport, the discrete form of $DL/Dt$ having no Coriolis part
+(chapter~\ref{sec:continuous}).
+\item[(c)] Consistency: $C\bm K$ is the cell-form Coriolis force on solid-body rotation, which on the sphere is
+$C\bm K=\nabla\psi$ at the cell centres ($-2\bm\Omega\times\bm K_c$ with the metric term).
 \end{enumerate}
 
 \begin{lemma}[pinning]\label{lem:pin}\derived\
 Let $C$ be linear and satisfy (a) and (b). Then
 \[ C\bm K=\Omega\,V^{-1}G^{T}d\psi ,\qquad\text{i.e.}\qquad
-   (C\bm K)_c=\frac{\Omega}{V_c}\sum_f g_{fc}\,(d\psi)_f , \]
-where $g_{fc}$ is read as the vector weight of cell $c$ in the flux through $f$. The force on solid-body
-rotation is fixed by the grid, $G$ and $\psi$ alone; $C$ has no freedom left on that state.
+   (C\bm K)_c=\frac{\Omega}{V_c}\sum_f \bm g_{fc}\,(d\psi)_f . \]
+The force on solid-body rotation is fixed by the grid, $G$ and $\psi$ alone; $C$ has no freedom left on that state.
 \end{lemma}
 \begin{proof}
 (a) for the states $\bm v$, $\bm K$ and $\bm v+\bm K$ gives, by linearity of $C$,
-$\langle\bm v,C\bm K\rangle_V+\langle\bm K,C\bm v\rangle_V=0$, so $\langle\bm v,C\bm K\rangle_V=
--\langle\bm K,C\bm v\rangle_V$ for every $\bm v$: a zero-work operator is skew in the $V$-inner product.
-(b) is a statement about $\langle\bm K,C\bm v\rangle_V$, so
-\[ \langle\bm v,C\bm K\rangle_V=\Omega\sum_f (G\bm v)_f(d\psi)_f=\Omega\sum_f\sum_c (g_{fc}\cdot\bm v_c)(d\psi)_f
-   =\Omega\sum_c \bm v_c\cdot\Big(\sum_f g_{fc}(d\psi)_f\Big)=\langle\bm v,\Omega V^{-1}G^T d\psi\rangle_V .\]
-This holds for every $\bm v$, and the $V$-inner product is non-degenerate, so the two vectors agree cell by cell.
+$\langle\bm v,C\bm K\rangle_V+\langle\bm K,C\bm v\rangle_V=0$: a zero-work operator is skew in the $V$-inner
+product. (b) is a statement about $\langle\bm K,C\bm v\rangle_V$, so
+\[ \langle\bm v,C\bm K\rangle_V=\Omega\sum_f (G\bm v)_f(d\psi)_f=\Omega\sum_f\sum_c (\bm g_{fc}\cdot\bm v_c)(d\psi)_f
+   =\Omega\sum_c \bm v_c\cdot\Big(\sum_f \bm g_{fc}(d\psi)_f\Big)=\langle\bm v,\Omega V^{-1}G^T d\psi\rangle_V .\]
+This holds for every $\bm v\in(\mathbb R^3)^{\rm cells}$, and the $V$-inner product is non-degenerate ($V_c>0$),
+so the two vectors agree cell by cell and component by component. Only the linearity of $C$, (a) for all $\bm v$
+and (b) for all $\bm v$ are used.
 \end{proof}
 
 \paragraph{The defect.} Define $\bm e=\Omega V^{-1}G^T d\psi-\nabla\psi$ (cell by cell, $\nabla\psi$ the exact
 gradient at the cell centre). By the lemma, (c) can hold only if $\bm e=0$. $\bm e$ is a property of the grid
-and $G$ alone; chapter~\ref{sec:seam} measures it.
+and $G$ alone; chapter~\ref{sec:seam} and the table below measure it.
 
-\begin{theorem}[no consistent zero-work exact closure on the cubed sphere]\label{thm:imp}\derived\
-Assume (i) $C$ linear, (ii) (a) exactly, (iii) (b) exactly against a compact linear-exact $G$ built from the
-panel-local stencils of a gnomonic cubed-sphere grid (two-point central, or the six-point cp5-central of
-chapter~\ref{sec:seam}, with the panel-edge ghosts filled by any interpolation along the neighbour panel's edge
-that reproduces linear functions). Then (c) fails: $\bm e\ne0$ in the cells adjacent to a panel seam, and
-$\max_{\text{row }0}|\bm e|/(\Omega a)$ does not go to zero as the resolution increases.
+\begin{theorem}[no consistent zero-work exact closure with the panel-local fluxes]\label{thm:imp}
+Assume (i) $C$ linear, (ii) (a) exactly, (iii) (b) exactly against the two-point central $G$ or the six-point
+cp5-central $G$ of chapter~\ref{sec:seam}, built panel by panel on the gnomonic cubed-sphere grid with the
+panel-edge ghosts filled by linear or cubic interpolation along the neighbour panel's edge (the two ghost orders
+tested). Then (c) fails: $\bm e\ne0$ in the cells adjacent to a panel seam, and $\max_{\text{row }0}|\bm e|$ does
+not go to zero as the resolution increases.
 \end{theorem}
-\begin{proof}[Proof (the structure; the numbers are chapter~\ref{sec:seam})]
-By Lemma~\ref{lem:pin}, (i)--(iii) pin $C\bm K$ to $\Omega V^{-1}G^T d\psi$, so (c) is equivalent to
-$\bm e=0$. Away from the seams, $G^T d\psi$ is the adjoint of a panel-local difference operator applied to the
-cell values of $\psi$; for a linear-exact $G$ it is $V_c\nabla\psi_c$ plus the quadratic error of the stencil,
-$O(h^2)$ since $\psi$ is a quadratic polynomial of position (interior rows converge at second order in
-chapter~\ref{sec:seam}). In a seam cell the stencil reaches across the seam into the neighbour panel, whose
-cell centres do not continue this panel's grid lines: relative to the continuation of the own line, the
-neighbour centre is offset along the seam by $\tfrac12\sin2\beta$ cells ($\beta$ the position along the edge,
-chapter~\ref{sec:seam}). A linear-exact interpolation along the neighbour's edge reproduces the linear part of
-$\psi$ exactly, so the error of $(d\psi)_f$ at a seam face is the quadratic part of $\psi$ evaluated at the
-offset point, which is $O(h^2)$ in $\psi$ but enters $\bm e$ divided by the face spacing $h$: the kink of the
-coordinate lines at the seam leaves an $O(h)\cdot O(1)/h=O(1)$ residual in the row-0 cells. The residual is
-proportional to $\sin2\beta$ and vanishes only at mid-edge. Hence $\bm e\ne0$ on the seam rows at every
-resolution, which is what is measured (row-0 max $0.27$--$0.33$ for $N=8$--$64$, two-point and six-point alike,
-linear or cubic ghosts).
-\end{proof}
+\noindent Status: \derived\ for the reduction (i)--(iii) $\Rightarrow$ ((c) $\Leftrightarrow\bm e=0$), by
+Lemma~\ref{lem:pin}; \measured\ for $\bm e\ne0$ on row 0 and its non-convergence (chapter~\ref{sec:seam} and the
+table below: row-0 max $0.19$--$0.32$ for $N=8$--$64$, both fluxes, both ghost orders, both axes, in units of
+$\Omega a$). The mechanism is the next paragraph; it is derived in its structure and measured in its size.
 
-What the theorem does not say: it is a statement about the combination of (a), (b) and a panel-local
-compact $G$. Dropping any one escapes it. A $C$ that does work (drop (a)), a closure against a different
-flux (drop (b)), or a nonlinear $C$ (drop (i)) are not covered; nor is a $G$ whose seam stencil is not
-panel-local (next paragraph). The 22\,\% seam-row figure of the side study is the same quantity in a
-different norm (fraction of $\max|f\rho u|$ instead of $\max|\bm e|/(\Omega a)$).
+\paragraph{Mechanism: the seam stencils are not linear-exact.} \derived\ Write $\psi$ near cell $c$ as
+$\psi_c+\nabla\psi_c\cdot(\bm x-\bm x_c)+q(\bm x)$ with $q$ the quadratic remainder. Since $G^Td$ is linear in $\psi$,
+\[ \bm e_c=E_c\,\nabla\psi_c+\bm r_c ,\qquad E_c=\big(V^{-1}G^T d-\nabla\big)\text{ on the linear functions }
+   \bm a\cdot\bm x\ (\text{a }3\times3\text{ matrix per cell}),\qquad
+   \bm r_c=\big(V^{-1}G^T d\,q\big)_c-\nabla q_c , \]
+and $\bm r_c=O(h)$ for every stencil whose weights are bounded: $dq$ across a link of length $O(h)$ is $O(h^2)$, the
+face measure over the cell volume is $O(1/h)$. So the only way $\bm e$ can stay $O(1)$ is $E_c=O(1)$: the stencil
+must fail to reproduce the gradient of linear functions at that cell. \measured\ (last three columns of the table;
+$E$ assembled with the same weights as $\bm e$, from the three functions $\bm a\cdot\bm x$): in the interior
+$|E|$ falls like $h^2$ ($0.026,0.0066,0.0017,0.0004$ for the two-point flux, $N=8$--$64$), on row 0 it stays at
+$0.37$--$0.42$ for every stencil, and the residual $|\bm e-E\nabla\psi|$ on row 0 falls like $h$
+($0.051,0.026,0.014,0.007$ two-point polar; $0.072$--$0.012$ tilted). The orders close: the non-converging defect is
+the linear-function error of the seam stencil, the quadratic part of $\psi$ contributes $O(h)$. Why the seam stencil
+is not linear-exact: at a seam face the jump $(d\psi)_f$ is taken between the two mirror cells across the seam
+(the neighbour's centre is the exact mirror of the own centre through the seam great circle,
+chapter~\ref{sec:seam}), while the weights that deposit the jump are those of the panel-local stencil, which
+reaches the neighbour panel at the continuation of the own grid line and is interpolated along the neighbour's
+edge; the link and the deposit point differ by the $\tfrac12\sin2\beta$-cell offset of chapter~\ref{sec:seam}
+and by the kink of the coordinate lines, an $O(h)$ mismatch divided by $h$. Linear interpolation along the
+neighbour's edge (linear or cubic in the index) reproduces linear functions along that edge, but that is not the
+property that the gradient needs; the mismatch is between where the jump is measured and where it is deposited.
+The six-point flux spreads the same mismatch over two rows (chapter~\ref{sec:seam}), which lowers row 0 by a tenth
+and raises row 1, and the cubic ghosts change it by under a tenth. The profile that results is even along the edge
+on the polar axis (next paragraph) because both the mirror offset and the deposit weights are symmetric under
+$\beta\to-\beta$ there.
 
-\paragraph{What an adjoint-consistent $G$ would have to satisfy.} \derived\ $\bm e=0$ reads
-$G^T d\psi=\Omega^{-1}V\nabla\psi$: the adjoint of the flux operator, applied to the face jumps of
-$\psi=\Omega s^2$, must return the exact cell gradient of $\psi$ times the cell volume, in every cell including
-the seam rows. Since $\psi$ is a quadratic polynomial of the position vector ($\psi=\Omega(1-z^2)$ on the unit
-sphere with a polar axis, and a rotated quadratic for a tilted axis), a sufficient condition is that
-$G^T d$ be exact on quadratics: $G^T d\,q=V\nabla q$ for every quadratic $q$ of position. With the discrete
-divergence $D=-G^T$ this is the discrete gradient theorem $\sum_c V_c\nabla q_c=-\sum_f (G^T dq)_c$ holding
-cell by cell, i.e.\ $G$ and the cell gradient must be adjoint on quadratics. On a lat--lon grid the
-two-point flux has this property for $\psi$ because $\psi$ is a function of latitude alone and the faces are
-aligned with it; $\psi$ is then an exact invariant of discrete solid-body advection, $(G\bm K)_f(d\psi)_f=0$
-face by face, and the right side of (b) vanishes on $\bm K$ as the left side does by (a). On the cubed sphere
-the seam faces are not aligned with $\psi$'s level lines, $(G\bm K)_f(d\psi)_f\ne0$ there, and (b) on $\bm K$
-becomes $\sum_f (G\bm K)_f(d\psi)_f=0$ as a sum, which a compact panel-local stencil does not deliver. A $G$
-that satisfies the quadratic adjoint condition must use, at a seam face, a stencil that knows the neighbour
-panel's geometry beyond linear interpolation along its edge: either a non-compact (edge-global) weighting that
-reproduces quadratics across the kink, or a flux defined on the mirror points of chapter~\ref{sec:seam}
-(the neighbour's centre is the exact mirror of the own centre through the seam great circle) with the
-quadratic correction $\tfrac12\sin2\beta\,h$ applied explicitly. Whether such a $G$ exists with a stencil of
-fixed width is open (chapter~\ref{sec:open}, item 1); the first-moment result below says that no compact
-linear-exact re-weighting gets there.
+What the theorem does not say: it is a statement about (a), (b) and these two panel-local $G$. Dropping any one
+escapes it: a $C$ that does work, a closure against a different flux, a nonlinear $C$, or a $G$ whose seam stencil
+is linear-exact (next paragraph) are not covered. The side study's 22\,\% seam-row figure (its part 1,
+thread post p1794706777579419; a fraction of $\max|f\rho u|$, no command or commit, not run in snapy) is the same
+defect in a different norm and is quoted, not reproduced.
 
-\paragraph{First moment of the defect along a seam row.}
+\paragraph{What $G$ would have to satisfy for $\bm e=0$.} \derived\ The necessary and sufficient condition for the
+given axis is $G^T d\psi=\Omega^{-1}V\nabla\psi$ for that one $\psi$. If $\bm e=0$ is required for every axis, $\psi$
+ranges over $\Omega(a^2-(\hat{\bm\Omega}\cdot\bm x)^2)$, so the condition becomes exactness of $V^{-1}G^T d$ on the
+homogeneous quadratic forms $\bm x^T A\bm x$ (the span of $(\bm a\cdot\bm x)^2$); it does not ask for exactness on
+linear functions, and exactness on all quadratics of position is sufficient but more than needed. With the
+discrete divergence $D=-G^T$ this is the discrete gradient theorem holding cell by cell on those forms. On a
+lat--lon grid the two-point flux has it for $\psi$ because $\psi$ depends on latitude alone and the faces are
+aligned with its level lines; $\psi$ is then an exact invariant of discrete solid-body advection,
+$(G\bm K)_f(d\psi)_f=0$ face by face, and the right side of (b) vanishes on $\bm K$ as the left side does by (a).
+On the cubed sphere the seam faces are not aligned with the level lines and the panel-local stencils are not
+linear-exact there (previous paragraph). A $G$ with $\bm e=0$ must therefore use, at a seam face, a stencil whose
+deposit points and link agree to $O(h^2)$: a flux defined on the mirror points with the deposit interpolated at the
+mirror point rather than at the grid-line continuation, or an edge-global weighting that reproduces the forms
+$\bm x^TA\bm x$ across the kink. Whether such a $G$ exists with a stencil of fixed width is open
+(chapter~\ref{sec:open}, item 1); nothing below settles it.
+
+\paragraph{Structure of the defect along the seams.}
 \measured\ (\texttt{scripts/geometry/seam\_moments.py}, \texttt{results/geometry/seam\_moments.txt}; same operators
-as chapter~\ref{sec:seam}, $\psi=\Omega s^2$, error per unit $\Omega a$, polar axis and an axis tilted $30^\circ$ about
-$x$). Each physical seam gets the edge coordinate $u=(\bm x_c-\bm m)\cdot\bm t$ ($\bm m$ the mid-edge point, $\bm t$
-the seam tangent, fixed in space for both sides) and the across-seam direction $\bm n_\perp=\bm t\times\bm x_c$.
+as chapter~\ref{sec:seam}; $\psi=\Omega s^2$ on the unit sphere; unit $\Omega a=\max_c|\nabla\psi_c|=1$; polar axis
+and an axis tilted $30^\circ$ about $x$). Each physical seam gets the edge coordinate $u=(\bm x_c-\bm m)\cdot\bm t$
+($\bm m$ the mid-edge point, $\bm t$ the seam tangent, fixed in space for both sides) and the across-seam direction
+$\bm n_\perp=\bm t\times\bm x_c$. Note on units: chapter~\ref{sec:seam} divides by the largest \emph{component} of
+$\nabla\psi$ ($0.770\,\Omega a$ on the polar axis, $0.97\,\Omega a$ tilted); its row-0 numbers are $1.30\times$ the
+polar numbers here. That is a labelling error there, to be corrected in its own PR.
 \begin{center}\small\begin{tabular}{llrrrrrrrr}\toprule
 axis & $G$ & $N$ & row-0 max & $|\bm e\cdot\bm n_\perp|$ row 0 & $|\bm e\cdot\bm t|$ row 0 & even & couple & rms$|\bm Z|$ & rms$|\bm F|$\\\midrule
-polar & 2-pt & 8 & 0.266 & 0.222 & 0.146 & 1.00 & 0.136 & 0.0164 & 0.0089\\
-polar & 2-pt & 16 & 0.281 & 0.248 & 0.130 & 1.00 & 0.056 & 0.0040 & 0.0019\\
-polar & 2-pt & 32 & 0.300 & 0.300 & 0.126 & 1.00 & 0.027 & 0.0006 & 0.0004\\
-polar & 2-pt & 64 & 0.327 & 0.327 & 0.125 & 1.00 & 0.013 & 0.0001 & 0.0001\\
-polar & 6-pt lin.\ & 8 & 0.241 & 0.220 & 0.100 & 1.00 & 0.106 & 0.0086 & 0.0017\\
-polar & 6-pt lin.\ & 16 & 0.254 & 0.244 & 0.090 & 1.00 & 0.060 & 0.0019 & 0.0005\\
-polar & 6-pt lin.\ & 32 & 0.266 & 0.255 & 0.084 & 1.00 & 0.043 & 0.0005 & 0.0001\\
-polar & 6-pt lin.\ & 64 & 0.272 & 0.260 & 0.081 & 1.00 & 0.025 & 0.0001 & 0.0000\\
-polar & 6-pt cubic & 64 & 0.278 & 0.268 & 0.103 & 1.00 & 0.023 & 0.0002 & 0.0000\\
-tilted & 2-pt & 8 & 0.326 & 0.253 & 0.229 & 0.60 & 0.137 & 0.0133 & 0.0063\\
-tilted & 2-pt & 64 & 0.333 & 0.250 & 0.197 & 0.55 & 0.018 & 0.0001 & 0.0001\\
-tilted & 6-pt lin.\ & 8 & 0.295 & 0.250 & 0.205 & 0.69 & 0.081 & 0.0061 & 0.0010\\
-tilted & 6-pt lin.\ & 64 & 0.305 & 0.278 & 0.194 & 0.57 & 0.038 & 0.0001 & 0.0000\\
+polar & 2-pt & 8 & 0.204 & 0.171 & 0.112 & 1.00 & 0.136 & 0.0126 & 0.0068\\
+polar & 2-pt & 16 & 0.216 & 0.191 & 0.100 & 1.00 & 0.056 & 0.0031 & 0.0015\\
+polar & 2-pt & 32 & 0.231 & 0.231 & 0.097 & 1.00 & 0.027 & 0.0005 & 0.0003\\
+polar & 2-pt & 64 & 0.252 & 0.252 & 0.097 & 1.00 & 0.013 & 0.0001 & 0.0001\\
+polar & 6-pt lin.\ & 8 & 0.186 & 0.169 & 0.077 & 1.00 & 0.106 & 0.0066 & 0.0013\\
+polar & 6-pt lin.\ & 16 & 0.196 & 0.188 & 0.070 & 1.00 & 0.060 & 0.0015 & 0.0004\\
+polar & 6-pt lin.\ & 32 & 0.205 & 0.196 & 0.065 & 1.00 & 0.043 & 0.0004 & 0.0001\\
+polar & 6-pt lin.\ & 64 & 0.209 & 0.200 & 0.062 & 1.00 & 0.025 & 0.0001 & 0.0000\\
+polar & 6-pt cubic & 64 & 0.214 & 0.206 & 0.079 & 1.00 & 0.023 & 0.0001 & 0.0000\\
+tilted & 2-pt & 8 & 0.311 & 0.241 & 0.218 & 0.60 & 0.137 & 0.0127 & 0.0060\\
+tilted & 2-pt & 64 & 0.324 & 0.243 & 0.192 & 0.55 & 0.018 & 0.0001 & 0.0001\\
+tilted & 6-pt lin.\ & 8 & 0.281 & 0.239 & 0.196 & 0.69 & 0.081 & 0.0058 & 0.0010\\
+tilted & 6-pt lin.\ & 64 & 0.297 & 0.271 & 0.189 & 0.57 & 0.038 & 0.0001 & 0.0000\\
 \bottomrule\end{tabular}\end{center}
 Columns: row-0 max of $|\bm e|$; row-0 max of the across-seam and along-seam components; the share of the row-0
 across-seam profile $\bm e\cdot\bm n_\perp(u)$ on one side that is even in $u$; \emph{couple} $=|\sum_{\rm both\ sides}
 V_c\,\bm e_c\cdot\bm n_\perp|/\sum|V_c\,\bm e_c\cdot\bm n_\perp|$ over row 0 (0 = exactly equal and opposite on the two
 sides); $\bm Z=\sum V_c\bm e_c$ and $\bm F=\sum V_c\bm e_c u_c$ over all cells within three rows of the seam on both
-sides, rms over the 12 seams. The full table (all $N$, both ghost orders) is in the results file.
+sides, rms over the 12 seams. The full table (all $N$, both ghost orders, the radial part, $E$ and the residual) is
+in the results file.
 
-What the table says (\measured): (1) the non-converging part of $\bm e$ is the across-seam component, about $1/4$ of
-$\Omega a$ at the corners, zero at mid-edge, and \emph{even} in $u$ on the polar axis (shape close to $\sin^2\beta$
-along the edge, not $\sin2\beta$); the along-seam component is concentrated in the corner cells and does not converge
-either ($0.08$--$0.13$ polar, $0.2$ tilted); (2) on the two sides of a seam the across-seam defect has opposite
-signs and equal magnitude up to $O(h)$: the \emph{couple} measure falls like $h$ (0.14, 0.06, 0.03, 0.01 for the
-two-point flux); (3) the net force $\bm Z$ and the first moment $\bm F$ of the defect over a seam vanish with
-resolution, roughly like $h^2$, for every stencil and axis. So the pinned force fails (c) by a seam-local couple of
-$O(1)$ amplitude that carries no net force and no net first moment at leading order; it cannot be removed by a
-compact re-weighting (below), but it also injects no net momentum or AAM into the pair of seam rows beyond $O(h^2)$,
-which is why a global closure can hide it in a budget while the local field stays wrong.
+What the table says (\measured): (1) the non-converging part of $\bm e$ is the across-seam component, $0.17$--$0.28$
+at the corners (two-point polar $0.171\to0.252$ rising with $N$, six-point $0.17$--$0.21$, tilted $0.24$--$0.28$),
+zero at mid-edge, and on the polar axis \emph{even} in $u$ (even share 1.000; a one-sided fit of $\bm e\cdot\bm n_\perp$
+to $\sin^2\beta$ leaves a relative residual of $0.04$--$0.18$, to $\sin2\beta$ of $1.0$); on the tilted axis the
+profile is mixed (even share $0.55$--$0.71$, and on the seam between panels 2 and 4 mostly odd). The along-seam
+component sits in the corner cells and does not converge either ($0.06$--$0.11$ polar, $0.19$--$0.22$ tilted).
+The radial part of $\bm e$ converges ($0.020,0.010,0.005,0.003$ on row 0 for the two-point flux). (2) On the two sides
+of a seam the across-seam defect has opposite signs and equal magnitude up to $O(h)$: the couple measure falls like
+$h$ for the two-point flux on either axis ($0.14,0.06,0.03,0.01$), and more slowly for the six-point flux on the
+tilted axis ($0.08,0.06,0.05,0.04$). (3) The net force $\bm Z$ and the first moment $\bm F$ of the defect over a seam
+vanish with resolution, roughly like $h^2$, for every stencil and axis; the net AAM torque of the defect per seam,
+$\sum V_c\bm K_c\cdot\bm e_c$, is at round-off on the polar axis ($\le5\times10^{-16}$) and $\le2.5\times10^{-5}$
+tilted (Xinyue's check on the same operators, review of PR~1). So the pinned force fails (c) by a seam-local defect
+of $O(1)$ amplitude, mostly a couple across the seam, that injects no net force, moment or AAM into the pair of seam
+rows beyond $O(h^2)$; a global closure can hide it in a budget while the local field stays wrong.
 
-\begin{claim}[moments of the defect are fixed by the face geometry]\derived\
-Let $G$ have, for each face $f$, weights $g_{fc}$ that sum to the face measure, $\sum_c g_{fc}=\bm n_f l_f$, and
-let $G$ be linear-exact, so that the weighted centroid of its stencil is the face midpoint,
-$\sum_c g_{fc}\otimes(\bm x_c-\bm x_f)=0$. Then for any such $G$, over the whole footprint of the seam faces,
-\[ \sum_c (G^T d\psi)_c=\sum_{f}(d\psi)_f\,\bm n_f l_f ,\qquad
-   \sum_c (G^T d\psi)_c\otimes\bm x_c=\sum_f (d\psi)_f\,\bm n_f l_f\otimes\bm x_f , \]
-both independent of the weights. A compact linear-exact re-weighting of $G$ (two-point to six-point, linear to cubic
-ghosts) therefore redistributes $V\bm e$ between the rows it touches but leaves the zeroth and first moments of
-$V\bm e$ over its footprint unchanged, and since those moments are the two-point values, which are $O(h^2)$ by the
-table, the defect it can produce is always a couple of the same total strength. This is the mechanism behind
-chapter~\ref{sec:seam}: the six-point flux moves part of the row-0 defect into row 1 (row-1 max $0.06$--$0.09$,
-not converging) and lowers row 0 by a tenth, with the same moments.
+\begin{claim}[zeroth and first moments of $G^T d\psi$ over the seam-face footprint]\derived\
+Let $G$ have, for each face $f$, weights whose sum is the face measure, $\sum_c\bm g_{fc}=\bm n_f l_f$. Then
+$\sum_c (G^T d\psi)_c=\sum_f (d\psi)_f\,\bm n_f l_f$ over the footprint of any set of faces, whatever the weights
+(exactly). If in addition the weighted deposit point of every face is its midpoint,
+$\sum_c \bm g_{fc}\otimes(\bm x_c-\bm x_f)=0$, then also $\sum_c (G^T d\psi)_c\otimes\bm x_c=\sum_f (d\psi)_f\,
+\bm n_f l_f\otimes\bm x_f$, independent of the weights.
 \end{claim}
 \begin{proof}
-$\sum_c (G^T d\psi)_c=\sum_f (d\psi)_f\sum_c g_{fc}$ and $\sum_c(G^T d\psi)_c\otimes\bm x_c=\sum_f(d\psi)_f
-\sum_c g_{fc}\otimes\bm x_c=\sum_f (d\psi)_f\,\bm n_f l_f\otimes\bm x_f$ by the two assumptions; neither depends on
-how the weights are distributed among the cells. $V\nabla\psi$ does not depend on $G$ at all.
+$\sum_c (G^T d\psi)_c=\sum_f (d\psi)_f\sum_c \bm g_{fc}$, and $\sum_c(G^T d\psi)_c\otimes\bm x_c=\sum_f(d\psi)_f
+\sum_c \bm g_{fc}\otimes\bm x_c=\sum_f (d\psi)_f\,\bm n_f l_f\otimes\bm x_f$ under the second assumption.
 \end{proof}
+\measured\ (the footprint lines of the results file, seam faces only, three stencils): the zeroth moment agrees between
+the two-point and the two six-point fluxes to $10^{-16}$ at every $N$ and axis, as the claim says. The first-moment
+hypothesis holds only approximately for these stencils, because the ghosts are interpolated linearly in the index along
+a curved neighbour row: the first moments differ by $3.9\times10^{-3},4.8\times10^{-4},6.0\times10^{-5},
+7.5\times10^{-6}$ ($N=8$--$64$, polar, against $|\bm F|=0.78$--$0.10$), i.e.\ like $h^3$. What follows, and no more:
+a re-weighting of the seam faces that keeps the weight sums leaves the net $V\bm e$ of the footprint unchanged, and one
+whose deposit points stay at the face midpoints leaves its first moment unchanged to $O(h^3)$. Both moments are
+$O(h^2)$ already for the two-point flux, so they constrain a re-weighted defect only to an average $|\bm e|=O(h)$ over
+a footprint of width $O(h)$; they do not bound its pointwise size, and they say nothing about the zero-moment part. \hyp\
+Whether a compact re-weighting exists that removes the row-0 defect is therefore open; the moments do not forbid it.
+The measured fact is only that the six-point flux moves part of the defect from row 0 into row 1 (row-1 max
+$0.06$--$0.09$ in chapter~\ref{sec:seam}'s unit, not converging) and lowers row 0 by a tenth.
 
 The side study's statement that the first moment of $\bm e$ in rows 0, 1, 2 is $-\tfrac14,-\tfrac18,-\tfrac1{12}\,
-\sin2\beta$ is \emph{not reproduced} here: the across-seam row-0 amplitude is indeed about $1/4$ at the corners,
-but its profile along the edge is even in $u$, not $\sin2\beta$, and the row-1 and row-2 amplitudes of the six-point
-flux are $0.06$--$0.09$ and $0.01$--$0.03$ (chapter~\ref{sec:seam}), not $1/8$ and $1/12$; for the two-point flux
-rows 1 and 2 converge. Part 2 does not state the definition of its first moment, so the comparison is with the
-quantities defined above; the geometric $\tfrac12\sin2\beta$ offset of chapter~\ref{sec:seam} is the only
-$\sin2\beta$ in the problem that is reproduced. \hyp\ Their three coefficients may be the row-0, row-1, row-2 shares of
-a $\sin2\beta$-weighted across-seam moment of a three-layer stencil; with that definition supplied they can be checked
-with the script in one line.
-
+\sin2\beta$ is \emph{not reproduced} here: the across-seam row-0 amplitude is $0.17$--$0.25$ at the corners in units of
+$\Omega a$ ($0.22$--$0.33$ in chapter~\ref{sec:seam}'s unit, which is where the "about $1/4$" of earlier drafts came
+from), its profile along the edge on the polar axis is even in $u$, not $\sin2\beta$, and the row-1 and row-2
+amplitudes of the six-point flux are $0.06$--$0.09$ and $0.01$--$0.03$ (chapter~\ref{sec:seam}), not $1/8$ and
+$1/12$; for the two-point flux rows 1 and 2 converge. Part 2 does not state the definition of its first moment, so the
+comparison is with the quantities defined above; the geometric $\tfrac12\sin2\beta$ offset of chapter~\ref{sec:seam}
+is the only $\sin2\beta$ in the problem that is reproduced. \hyp\ Their three coefficients may be the row-0, row-1,
+row-2 shares of a $\sin2\beta$-weighted across-seam moment of a three-layer stencil; with that definition supplied
+(asked for in the thread) they can be checked with the script in one line.
