@@ -20,7 +20,8 @@ with the cp5-central face weights (the central part of snapy's weno5 velocity re
 0.186/0.196/0.205/0.209 at $N=8/16/32/64$ and row-1 max 0.064/0.055/0.045/0.049, neither converging; row 2 falls to
 $0.006$--$0.007$ and stays there (0.024/0.011/0.0064/0.0074), the interior converges at second order
 (0.012/0.0032/0.0008/0.0002). Linear and cubic panel-edge ghosts differ by under 10\% in row 0 for $N\ge16$
-($+24\%$ at $N=8$) and not at all from row 2 inward. So the wider stencil spreads the non-converging defect into
-row 1 and does not remove it, and the ghost order is not the cause. This agrees with the side study (linear or cubic
-alike) and with Jiheng's five-point row-0 0.18--0.21; the numbers differ by the norm (max over the row vs fraction of
-$\max|f\rho u|$).
+($+24\%$ at $N=8$), by at most 6\% in row 2 ($+6.0\%$, $-5.3\%$, $+0.5\%$, $0$ at $N=8\ldots64$) and not at all in
+the interior (rows $\ge3$). So the wider stencil spreads the non-converging defect into row 1 and does not remove it,
+and the ghost order is not the cause. This agrees with the side study (linear or cubic alike). Jiheng's five-point
+row-0 0.18--0.21 is numerically close, but the norms differ (max over the row here, a fraction of $\max|f\rho u|$
+there), so the agreement in value is not a like-for-like check.
