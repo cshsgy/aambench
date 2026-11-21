@@ -14,8 +14,9 @@ Agrees with Jiheng's check on snapy main \texttt{cbf86830}. Two forms of the two
 files: \texttt{seam\_pin.py} (the table above, \texttt{seam\_pin\_2pt.txt}) deposits the neighbour half of a seam-face
 jump into the mirror cell, while the \texttt{sten 2} rows of \texttt{seam\_pin\_6pt.txt} and \texttt{seam\_moments.py}
 (chapter~\ref{sec:pinning}) deposit it through the ghost interpolation along the neighbour's edge, the panel-local form
-snapy uses. Rows~1 and inward coincide; row 0 differs slightly (at $N=8$ max 0.2039 vs 0.2044, rms 0.0906 vs 0.1020;
-at three digits the two agree at every $N$). Wider linear-exact seam stencil
+snapy uses. Rows~1 and inward coincide; row 0 differs: max 0.2039 vs 0.2044 at $N=8$ and equal to three digits from
+$N=16$; rms 0.0906 vs 0.1020 at $N=8$ and 0.0873 vs 0.0893 at $N=16$, equal to three digits from $N=32$. The table
+above reports the mirror-cell form. Wider linear-exact seam stencil
 (\texttt{seam\_pin\_reweight.py}, \texttt{results/geometry/seam\_pin\_reweight.txt}): row-0 0.28 ($0.276$--$0.285$ at
 $N=8$--$32$), row-1 0.14, the defect moves into row 1.
 
