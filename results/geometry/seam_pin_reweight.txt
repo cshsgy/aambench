@@ -5,5 +5,5 @@
 16 LSQ-lin  [0.2757 0.1391 0.009  0.0096]
 32 2pt      [0.2312 0.0025 0.0025 0.0024]
 32 LSQ-lin  [0.2848 0.1369 0.0025 0.0024]
-reproduce: cd scripts/geometry && python seam_pin_reweight.py  (numpy 2.5.5, python 3.12.6, about 10 s); the numbers are those of the last commit that modifies this file: git log -1 --format=%H -- results/geometry/seam_pin_reweight.txt
+reproduce: cd scripts/geometry && python seam_pin_reweight.py  (numpy 2.5.5, python 3.12.6, a few seconds); the numbers are those of the last commit that modifies this file: git log -1 --format=%H -- results/geometry/seam_pin_reweight.txt
 psi = Omega s^2 on the unit sphere, Omega = a = 1, polar axis; 2pt = the 0.5/0.5 face interpolation, LSQ-lin = linear-exact least-squares weights over own cell, mirror neighbour and the along-seam neighbours of both at seam faces; error = |V^-1 G^T dpsi - grad psi| / max_c |grad psi_c| (= Omega a)
