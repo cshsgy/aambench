@@ -154,7 +154,7 @@ $\sum V_c\bm K_c\cdot\bm e_c$ over the same cells (the \emph{tau} column of the 
 at round-off on the polar axis ($\le4.4\times10^{-16}$, every stencil and $N$); on the tilted axis it is small but not
 clearly convergent: $9.8\times10^{-4},2.4\times10^{-5},4.6\times10^{-5},2.0\times10^{-5}$ for the two-point flux and
 $1.7\times10^{-3},4.1\times10^{-4},1.2\times10^{-4},3.2\times10^{-5}$ for the six-point flux with linear ghosts (cubic
-ghosts $8$--$13\,\%$ lower), $N=8$--$64$. Xinyue's check on the same operators (review of PR~1; two-point flux, $N=16$ and $64$)
+ghosts $6$--$13\,\%$ lower), $N=8$--$64$. Xinyue's check on the same operators (review of PR~1; two-point flux, $N=16$ and $64$)
 gave the two-point values above. So the pinned force fails (c) by a seam-local defect of $O(1)$ amplitude, mostly a
 couple across the seam, that injects no net force or first moment into the pair of seam rows beyond $O(h^2)$ and no
 net AAM on the polar axis (on the tilted axis at most $2\times10^{-3}$ in the table's unit, order unresolved); a global
