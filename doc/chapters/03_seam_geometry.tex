@@ -10,7 +10,12 @@ $N$ & row-0 max & row-0 rms & row-1 max & interior max\\\midrule
 Row 0 does not converge; interior is second order. Across a seam the neighbour centre is the exact mirror of the
 own centre (offset $\le 2\times10^{-14}$ cell); relative to the continuation of the own grid line it is offset by
 $\tfrac12\sin 2\beta$ cells (max 0.40/0.43/0.45/0.46 at $N=8\ldots64$), zero at mid-edge, largest at the corners.
-Agrees with Jiheng's check on snapy main \texttt{cbf86830}. Wider linear-exact seam stencil
+Agrees with Jiheng's check on snapy main \texttt{cbf86830}. Two forms of the two-point flux appear in the results
+files: \texttt{seam\_pin.py} (the table above, \texttt{seam\_pin\_2pt.txt}) deposits the neighbour half of a seam-face
+jump into the mirror cell, while the \texttt{sten 2} rows of \texttt{seam\_pin\_6pt.txt} and \texttt{seam\_moments.py}
+(chapter~\ref{sec:pinning}) deposit it through the ghost interpolation along the neighbour's edge, the panel-local form
+snapy uses. Rows~1 and inward coincide; row 0 differs slightly (at $N=8$ max 0.2039 vs 0.2044, rms 0.0906 vs 0.1020;
+at three digits the two agree at every $N$). Wider linear-exact seam stencil
 (\texttt{seam\_pin\_reweight.py}, \texttt{results/geometry/seam\_pin\_reweight.txt}): row-0 0.28 ($0.276$--$0.285$ at
 $N=8$--$32$), row-1 0.14, the defect moves into row 1.
 
